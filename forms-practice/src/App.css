@@ -44,7 +44,25 @@
   color: #888;
 }
 
+
 .char-form-input {
   margin: 50px;
   height: 30px;
+}
+
+.char-table {
+  margin: 100px auto;
+  border: 10px;
+  border-color: white;
+  border-style: solid;
+}
+
+.char-table-td {
+  margin: 40px
+}
+
+.char-table-row td {
+  border-style: solid;
+  border-color: white;
+  border: 3px;
 }

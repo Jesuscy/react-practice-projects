@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { PersonajesCard } from './PersonajesCard';
+import axios from "axios";
 /*
    Porps: name ,faction, profession, race
 
@@ -6,7 +8,7 @@ import React, { useState } from 'react'
    */
 export const PersonajesForm = () => {
 
-    const [character, setCharacter] = useState([]);
+    const [characters, setCharacter] = useState([]);
     //Metodo para prevenir la recarga de la página.
     const submitForm = (event) => {
         event.preventDefault();
@@ -18,13 +20,27 @@ export const PersonajesForm = () => {
             race: event.target[3].value
 
         }
-        setCharacter(character)
-        console.log(character)
+        setCharacter([...characters, character])
 
         document.querySelectorAll(".char-form-input").forEach((input) => (
             input.value = ""
         ))
     }
+
+
+
+
+    useEffect(() => {
+        const url = "url Api"
+        axios.get(url).then((res) => {
+            console.log(res)
+        })
+    }, [characters])
+
+
+
+
+    useEffect(() => console.log(characters), [characters])
 
     return (
         <>
@@ -36,7 +52,35 @@ export const PersonajesForm = () => {
                 <input type="text" className='char-form-input' placeholder='Race' name='race' />
                 <br />
                 <button type='submit'>Guardar</button>
+
             </form>
+            {characters.length == 0 ? <></> :
+                <>
+                    <div className='table'>
+
+                        <table className='char-table'>
+
+                            <th>
+                                <td>Nombre</td>
+                                <td>Faccion</td>
+                                <td>Profesion</td>
+                                <td>Raza</td>
+                            </th>
+
+                            {
+                                characters.map((char) => {
+                                    return (
+
+                                        <PersonajesCard name={char.name} faction={char.faction} profession={char.profession} race={char.race} />
+                                    )
+                                })
+
+                            }
+                        </table>
+                    </div>
+                </>}
+
         </>
+
     )
 }
